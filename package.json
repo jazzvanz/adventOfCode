@@ -1,0 +1,25 @@
+{
+  "name": "adventofcode",
+  "version": "1.0.0",
+  "description": "adventOfCode Challenges",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jazzvanz/adventOfCode.git"
+  },
+  "keywords": [
+    "advent",
+    "of",
+    "code",
+    "2020"
+  ],
+  "author": "jazz van geel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jazzvanz/adventOfCode/issues"
+  },
+  "homepage": "https://github.com/jazzvanz/adventOfCode#readme"
+}
