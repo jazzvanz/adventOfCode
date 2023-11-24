@@ -1,13 +1,10 @@
 import run from "aocrunner"
 
 const parseInput = (rawInput: string) => rawInput
-
-const part1 = (rawInput: string): number => {
-  const input = parseInput(rawInput)
-
+const countCalories = (parsedInput: string): number[] => {
   // We convert the large string into an array of strings.
   // Each string is a list of what is in each Elfs backpack
-  const listOfBackpacks: string[] = rawInput.split("\n\n")
+  const listOfBackpacks: string[] = parsedInput.split("\n\n")
 
   // Then we take each of those strings in the array and convert them to their own arrays. 
   // These Arrays (representing a Elf backpack) as a list of strings, being each snacks calorie count.
@@ -23,20 +20,40 @@ const part1 = (rawInput: string): number => {
       }, 0,
     );
   });
+
+  return totalBackpackCals;
+}
+
+const part1 = (rawInput: string): number => {
+  const input = parseInput(rawInput)
+
+  const totalBackpackCals = countCalories(input)
   
   // We then return the highest number in the array
   const hightCalCount =  Math.max(...totalBackpackCals)
 
-  // Tests 
-  // Typescript
   return hightCalCount
 }
 
 const part2 = (rawInput: string) => {
   const input = parseInput(rawInput)
 
-  // Find the top three Elves carrying the most Calories. How many Calories are those Elves carrying in total?
-  return
+  const totalBackpackCals = countCalories(input)
+
+  // const acendingCalorieCount = totalBackpackCals.sort();
+  const topThreeCalorieCount = totalBackpackCals.sort().slice(-3);
+
+  const totalTopCalories = topThreeCalorieCount.reduce(
+    (totalCals, currentCals) => {
+      return totalCals + currentCals
+    }, 0,
+  );
+
+  // Find the top three Elves carrying the most Calories.
+  // use sort, then grab top 3?
+
+  // How many Calories are those Elves carrying in total?
+  return totalTopCalories;
 }
 
 run({
