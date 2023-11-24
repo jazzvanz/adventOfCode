@@ -35,24 +35,21 @@ const part1 = (rawInput: string): number => {
   return hightCalCount
 }
 
-const part2 = (rawInput: string) => {
+const part2 = (rawInput: string): number => {
   const input = parseInput(rawInput)
 
   const totalBackpackCals = countCalories(input)
 
-  // const acendingCalorieCount = totalBackpackCals.sort();
+  // sort ascending and return the last 3 results
   const topThreeCalorieCount = totalBackpackCals.sort().slice(-3);
 
+  // add those calories together
   const totalTopCalories = topThreeCalorieCount.reduce(
     (totalCals, currentCals) => {
       return totalCals + currentCals
     }, 0,
   );
 
-  // Find the top three Elves carrying the most Calories.
-  // use sort, then grab top 3?
-
-  // How many Calories are those Elves carrying in total?
   return totalTopCalories;
 }
 
