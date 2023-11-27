@@ -2,23 +2,24 @@ import run from "aocrunner"
 
 const parseInput = (rawInput: string) => rawInput
 
- // A for Rock, 
- // B for Paper, and 
- // C for Scissors - First column
- // X for Rock, 
- // Y for Paper, 
- // and Z for Scissors - 2nd coloumn (you are the second column)
+const gameLegend = {
+  a: 'rock',
+  b: 'paper',
+  c: 'scissors',
+  x: 'rock',
+  y: 'paper',
+  z: 'scissors'
+}
 
-//  Two ways you score
-// By Shape you choose 
-// 1 for Rock
-// 2 for Paper
-// 3 for Scissors
-
-// By outcome of the match
-// 0 if you lost,
-//  3 if the round was a draw, 
-// and 6 if you won).
+// if you pick
+const pointsLegend = {
+  rock: 1,
+  paper: 2,
+  scissors: 3,
+  loss: 0,
+  draw: 3,
+  win: 6
+}
 
 // Frist Draft Plan? 
 // add to parse function - breaking up each line
@@ -30,8 +31,11 @@ const parseInput = (rawInput: string) => rawInput
 const part1 = (rawInput: string) => {
   const input = parseInput(rawInput)
   const listOfMatches: string[] = input.split("\n")
+  const arrayOfMatches: string[][] = listOfMatches.map((listOfMatches) => listOfMatches.split(" "));
 
-  console.log(listOfMatches, 'results?')
+  console.log(arrayOfMatches, 'results?')
+  let totalPoints;
+  
 
   return
 }
