@@ -5,7 +5,7 @@ const parseInput = (rawInput: string) => {
   return arrayOfStrings 
 }
 
-const digits: {} = {
+const digits: { [key: string]: string; } = {
   'one': '1',
   'two': '2',
   'three': '3',
@@ -16,10 +16,6 @@ const digits: {} = {
   'eight': '8',
   'nine': '9'
 }
-
-// const reverseString = (str : string) => {
-//   return str.split("").reverse().join("");
-// }
 
 const part1 = (rawInput: string) => {
   const input = parseInput(rawInput)
@@ -47,28 +43,39 @@ const part2 = (rawInput: string) => {
   const input = parseInput(rawInput)
   let codes: number[] = []
 
-  for (let line = 0; line < input.length; line++){
+  for (let line = 0; line < input.length; line++) {
 
-    let newLine = input[line]
+    const newLine = input[line];
 
-    for (let [key, value] of Object.entries(digits)) {
-      newLine = newLine.replaceAll(key, `${value}`)
+    for (let stringPosition = 0; stringPosition < newLine.length; stringPosition++){
+      const endOfIndex = newLine.length
+      let stringStart = newLine.slice(0, stringPosition)
+      let stringEnd = newLine.slice(endOfIndex - stringPosition, endOfIndex)
+
+      let endLetter
+      let startLetter
+      let totalLetter = ''
+
+      for(let [key, value] of Object.entries(digits)) {
+
+        if(startLetter && endLetter) {
+          totalLetter = startLetter + endLetter
+          break
+        }
+
+        if(stringStart.includes(key) ||  stringStart.includes(value)){
+          // console.log('String Start includes KeyValue', key, value, stringStart)
+          startLetter = value
+        }
+        if(stringEnd.includes(key) || stringEnd.includes(value)){
+          // console.log('String end includes Key/Value', key, value, stringEnd)
+          endLetter = value
+        }
+      }
+      console.log(totalLetter)
+      return codes.push(parseInt(totalLetter))
     }
-
-    const instruction: string[] = newLine.split("");
-    // console.log(instruction, 'instruction')
-
-    const numbers = instruction.filter(character => /\d/.test(character));
-
-    console.log(numbers, 'instruction')
-
-    const firstNumber = numbers[0]
-    const lastNumber = numbers.slice(-1)
-    const total = firstNumber + lastNumber
-
-    codes.push(parseInt(total))
-  }
-
+  }  
   const totalCalibrationValues = codes.reduce((acc, code) => {
     return acc + code
   }, 0)
