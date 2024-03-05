@@ -47,40 +47,52 @@ const part2 = (rawInput: string) => {
 
     const newLine = input[line];
 
-    for (let stringPosition = 0; stringPosition < newLine.length; stringPosition++){
-      const endOfIndex = newLine.length
-      let stringStart = newLine.slice(0, stringPosition)
-      let stringEnd = newLine.slice(endOfIndex - stringPosition, endOfIndex)
+    // This is where we will stash the numbers we find.
+    let listOfNumbersFound: string[] = []
 
-      let endLetter
-      let startLetter
-      let totalLetter = ''
+    for (let stringPosition = 0; stringPosition < newLine.length; stringPosition++){
+
+      // we are crawling the string one by one
+      let stringOneByOne = newLine.slice(0, stringPosition)
+
+      // Add the numbers we find in order.
+      // adding them to the end, its small effort on performance
 
       for(let [key, value] of Object.entries(digits)) {
-
-        if(startLetter && endLetter) {
-          totalLetter = startLetter + endLetter
-          break
-        }
-
-        if(stringStart.includes(key) ||  stringStart.includes(value)){
-          // console.log('String Start includes KeyValue', key, value, stringStart)
-          startLetter = value
-        }
-        if(stringEnd.includes(key) || stringEnd.includes(value)){
-          // console.log('String end includes Key/Value', key, value, stringEnd)
-          endLetter = value
+        if(stringOneByOne.includes(key) || stringOneByOne.includes(value)){
+          if(!listOfNumbersFound.includes(value)) {
+            listOfNumbersFound.push(value)
+            console.log('Added the Value', listOfNumbersFound)
+          }
         }
       }
-      console.log(totalLetter)
-      return codes.push(parseInt(totalLetter))
+
+      let totalLetter = '5'
+      console.log('String:', stringOneByOne, ' numbers:', listOfNumbersFound)
+
+
+
+      // for(let [key, value] of Object.entries(digits)) {
+
+      //   if(startLetter && endLetter) {
+      //     totalLetter = startLetter + endLetter
+      //     break
+      //   }
+
+      //   if(stringStart.includes(key) ||  stringStart.includes(value)){
+      //     // console.log('String Start includes KeyValue', key, value, stringStart)
+      //     startLetter = value
+      //   }
+      // }
+      // console.log(totalLetter)
+      // return codes.push(parseInt(totalLetter))
     }
   }  
-  const totalCalibrationValues = codes.reduce((acc, code) => {
-    return acc + code
-  }, 0)
+  // const totalCalibrationValues = codes.reduce((acc, code) => {
+  //   return acc + code
+  // }, 0)
   
-  return totalCalibrationValues
+  // return totalCalibrationValues
 }
 
 // attempt 1: 52630 - too low
