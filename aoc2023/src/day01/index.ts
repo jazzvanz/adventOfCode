@@ -5,16 +5,62 @@ const parseInput = (rawInput: string) => {
   return arrayOfStrings 
 }
 
-const digits: { [key: string]: string; } = {
-  'one': '1',
-  'two': '2',
-  'three': '3',
-  'four': '4',
-  'five': '5',
-  'six': '6',
-  'seven': '7',
-  'eight': '8',
-  'nine': '9'
+const fetchNumber = (line: string, reverse: boolean = false) => {
+  let number = 0
+
+  // lets figure out the total from reach line as a number.
+  for (let stringPosition = 0; stringPosition < line.length; stringPosition++) {
+
+    let individualCharacter = reverse ? line[line.length - stringPosition]: line[stringPosition];
+    // console.log('line Length:', line.length)
+
+    // early exit
+    // If the value is a number, add it and no need to run through switch.
+    const isNumber = parseInt(individualCharacter)
+    if(!isNaN(isNumber)){
+      number = isNumber
+      return number
+    } else {
+      const startingIndex = reverse ? line.length : 0;
+      const endingIndex = reverse ? line.length - stringPosition : stringPosition + 1;
+
+      // MOVING BACKWARD STILL NEEDS TO BE SORTED
+
+      console.log(startingIndex)
+      const stringSegment = line.slice(startingIndex, endingIndex)
+      console.log(stringSegment, 'string segment')
+      // this can be improved
+      if(stringSegment.includes('one')) {
+        number = 1
+        return number
+      } else if((stringSegment.includes('two'))) {
+        number = 2
+        return number
+      }  else if((stringSegment.includes('three'))) {
+        number = 3
+        return number
+      }  else if((stringSegment.includes('four'))) {
+        number = 4
+        return number
+      }  else if((stringSegment.includes('five'))) {
+        number = 5
+        return number
+      }  else if((stringSegment.includes('six'))) {
+        number = 6
+        return number
+      }  else if((stringSegment.includes('seven'))) {
+        number = 7
+        return number
+      }  else if((stringSegment.includes('eight'))) {
+        number = 8
+        return number
+      }  else if((stringSegment.includes('nine'))) {
+        number = 9
+        return number
+      }
+    }
+  }
+  return number
 }
 
 const part1 = (rawInput: string) => {
@@ -41,62 +87,42 @@ const part1 = (rawInput: string) => {
 
 const part2 = (rawInput: string) => {
   const input = parseInput(rawInput)
-  let codes: number[] = []
+  let listOfTotals: number[] = []
 
   for (let line = 0; line < input.length; line++) {
 
     const newLine = input[line];
+    let lineTotal
 
-    // This is where we will stash the numbers we find.
-    let listOfNumbersFound: string[] = []
+    const getLastNumber = true
 
-    for (let stringPosition = 0; stringPosition < newLine.length; stringPosition++){
+    const firstNumber = fetchNumber(newLine)
+    const lastNumber = fetchNumber(newLine, getLastNumber)
+    console.log('Line:', newLine, 'First Number:',  firstNumber)
+    console.log('Line:', newLine, 'Last Number:',  lastNumber)
 
-      // we are crawling the string one by one
-      let stringOneByOne = newLine.slice(0, stringPosition)
+    // last number
 
-      // Add the numbers we find in order.
-      // adding them to the end, its small effort on performance
+    lineTotal = firstNumber + lastNumber
 
-      for(let [key, value] of Object.entries(digits)) {
-        if(stringOneByOne.includes(key) || stringOneByOne.includes(value)){
-          if(!listOfNumbersFound.includes(value)) {
-            listOfNumbersFound.push(value)
-            console.log('Added the Value', listOfNumbersFound)
-          }
-        }
-      }
+    // add together again 
+    listOfTotals.push(lineTotal)
+  }
 
-      let totalLetter = '5'
-      console.log('String:', stringOneByOne, ' numbers:', listOfNumbersFound)
+  // Expecting [23, 45, 54, etc.]
+  const finalTotal = listOfTotals.reduce((acc, numbers) => {
+    return acc + numbers
+  }, 0);
 
-
-
-      // for(let [key, value] of Object.entries(digits)) {
-
-      //   if(startLetter && endLetter) {
-      //     totalLetter = startLetter + endLetter
-      //     break
-      //   }
-
-      //   if(stringStart.includes(key) ||  stringStart.includes(value)){
-      //     // console.log('String Start includes KeyValue', key, value, stringStart)
-      //     startLetter = value
-      //   }
-      // }
-      // console.log(totalLetter)
-      // return codes.push(parseInt(totalLetter))
-    }
-  }  
-  // const totalCalibrationValues = codes.reduce((acc, code) => {
-  //   return acc + code
-  // }, 0)
-  
-  // return totalCalibrationValues
+  return finalTotal
 }
+// part 1 correct
+// 52974
 
+// part 2
 // attempt 1: 52630 - too low
 // attempt 2: 52638 - too low
+// atempt 3: 9304 -- too low
 
 // Part 1 = O(n)
 // Part 2 = O(n + 1)
