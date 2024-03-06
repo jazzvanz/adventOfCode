@@ -11,24 +11,20 @@ const fetchNumber = (line: string, reverse: boolean = false) => {
   // lets figure out the total from reach line as a number.
   for (let stringPosition = 0; stringPosition < line.length; stringPosition++) {
 
-    let individualCharacter = reverse ? line[line.length - stringPosition]: line[stringPosition];
-    // console.log('line Length:', line.length)
+    let individualCharacter = reverse ? line[line.length - 1 - stringPosition]: line[stringPosition + 1];
 
     // early exit
     // If the value is a number, add it and no need to run through switch.
+    // we need a better check for number. 
     const isNumber = parseInt(individualCharacter)
+
     if(!isNaN(isNumber)){
       number = isNumber
       return number
     } else {
-      const startingIndex = reverse ? line.length : 0;
-      const endingIndex = reverse ? line.length - stringPosition : stringPosition + 1;
+      const stringSegment = reverse ? line.slice((line.length - 1 - stringPosition)) : line.slice(0, stringPosition + 1)
+      console.log('string segment:', stringSegment, 'Reverse:', reverse)
 
-      // MOVING BACKWARD STILL NEEDS TO BE SORTED
-
-      console.log(startingIndex)
-      const stringSegment = line.slice(startingIndex, endingIndex)
-      console.log(stringSegment, 'string segment')
       // this can be improved
       if(stringSegment.includes('one')) {
         number = 1
@@ -98,6 +94,7 @@ const part2 = (rawInput: string) => {
 
     const firstNumber = fetchNumber(newLine)
     const lastNumber = fetchNumber(newLine, getLastNumber)
+
     console.log('Line:', newLine, 'First Number:',  firstNumber)
     console.log('Line:', newLine, 'Last Number:',  lastNumber)
 
